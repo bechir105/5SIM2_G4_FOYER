@@ -1,3 +1,5 @@
+package tn.esprit.spring.Services.Universite;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.DAO.Entities.Universite;
