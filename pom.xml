@@ -39,11 +39,11 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Lombok (remove optional=true to make it a required dependency) -->
+        <!-- Lombok (compile-time only dependency) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>provided</scope> <!-- Lombok is a compile-time only dependency -->
+            <scope>provided</scope>
         </dependency>
 
         <!-- Spring Boot Test (only for test scope) -->
@@ -64,22 +64,22 @@
     <build>
         <plugins>
             <!-- Maven Compiler Plugin to enable annotation processing for Lombok -->
-          <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <version>3.10.1</version> <!-- Use latest version -->
-    <configuration>
-        <source>17</source> <!-- Set the Java source version -->
-        <target>17</target> <!-- Set the Java target version -->
-        <annotationProcessorPaths>
-            <path>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-            </path>
-        </annotationProcessorPaths>
-    </configuration>
-</plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.24.0</version> <!-- Use the latest version -->
+                <configuration>
+                    <source>17</source> <!-- Set Java source version -->
+                    <target>17</target> <!-- Set Java target version -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.24</version> <!-- Specify version here -->
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
 
             <!-- Spring Boot Maven Plugin -->
             <plugin>
