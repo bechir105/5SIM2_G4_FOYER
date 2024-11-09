@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Universite implements Serializable {
     @Id

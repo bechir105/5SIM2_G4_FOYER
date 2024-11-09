@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Etudiant implements Serializable {
     @Id
