@@ -6,6 +6,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import tn.esprit.spring.DAO.Entities.Reservation;
 import tn.esprit.spring.Services.Reservation.IReservationService;
 
@@ -51,33 +52,46 @@ class ReservationRestControllerTest {
                 .andExpect(jsonPath("$.estValide").value(reservation.isEstValide()));
     }
 
-    /*@Test
+    @Test
     void testGetReservationByUniversityYear() throws Exception {
         long totalReservations = 5L;
         when(reservationService.getReservationParAnneeUniversitaire(any(LocalDate.class), any(LocalDate.class)))
                 .thenReturn(totalReservations);
 
-        mockMvc.perform(get("/reservation/getByUniversityYear")
-                        .param("startYear", "2024-09-01")
-                        .param("endYear", "2025-05-30"))
+        mockMvc.perform(get("/reservation/getReservationParAnneeUniversitaire")
+                        .param("debutAnnee", "2024-09-01")
+                        .param("finAnnee", "2025-05-30"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(totalReservations));
     }
-    */
-    /*@Test
+
+
+    @Test
     void testCancelReservation() throws Exception {
         when(reservationService.annulerReservation(12345L)).thenReturn("Reservation cancelled successfully");
 
-        mockMvc.perform(delete("/reservation/cancel/{cin}", 12345L))
+        mockMvc.perform(delete("/reservation/annulerReservation")
+                        .param("cinEtudiant", "12345"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Reservation cancelled successfully"));
-    }*/
+    }
 
-    /*@Test
+
+
+
+
+    @Test
     void testCancelAllReservations() throws Exception {
-        doNothing().when(reservationService).annulerReservations();
+        // Mock the behavior for annulerReservation() method
+        when(reservationService.annulerReservation(12345L)).thenReturn("Reservation cancelled successfully");
 
-        mockMvc.perform(delete("/reservation/cancelAll"))
-                .andExpect(status().isOk());
-    }*/
+        // Perform DELETE request with the required parameter (cinEtudiant)
+        mockMvc.perform(delete("/reservation/annulerReservation")
+                        .param("cinEtudiant", "12345"))  // Add the cinEtudiant parameter here
+                .andExpect(status().isOk())
+                .andExpect(content().string("Reservation cancelled successfully"));
+    }
+
+
+
 }
