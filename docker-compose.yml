@@ -22,7 +22,7 @@ services:
         {
           "spring.datasource.url": "jdbc:mysql://mysqldb:3306/db?createDatabaseIfNotExist=true",
           "spring.datasource.username": "root",
-          "spring.datasource.password": "guirat",
+          "spring.datasource.password": "bechir",
           "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL57Dialect",
           "spring.jpa.hibernate.ddl-auto": "update"
         }
