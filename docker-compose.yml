@@ -13,7 +13,7 @@ services:
   app-foyer:
     depends_on:
       - mysqldb
-    image: KefiMohamedBechir/Foyer:1.0.0
+    image: KefiMohamedBechir/foyer:1.0.0
     restart: on-failure
     ports:
       - "8089:8089"
