@@ -1,18 +1,32 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
 Vagrant.configure("2") do |config|
- # Sync your project folder to the VM
+  # Set the box
+  config.vm.box = "ubuntu/bionic64"
+
+  # Sync project folder to the VM
   config.vm.synced_folder ".", "/vagrant"
+
+  # Allocate more memory for SonarQube to run smoothly
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "4096"  # Allocate 4GB to ensure enough memory for SonarQube
+  end
+
 
   # Provisioning script
   config.vm.provision "shell", inline: <<-SHELL
+    # Update and install essential packages
     sudo apt-get update
-    sudo apt-get install -y git maven
+    sudo apt-get install -y git maven apt-transport-https ca-certificates curl software-properties-common
+
+    # Install Docker
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+    sudo apt-get update
+    sudo apt-get install -y docker-ce
+    sudo systemctl start docker
+    sudo systemctl enable docker
 
     # Install Jenkins
     wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
@@ -20,9 +34,12 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get install -y jenkins
     sudo systemctl start jenkins
+    sudo systemctl enable jenkins
   SHELL
 
   # Forward Jenkins default port
   config.vm.network "forwarded_port", guest: 8080, host: 1234
-config.vm.box = "ubuntu/bionic64"
+
+  # Forward SonarQube port
+  config.vm.network "forwarded_port", guest: 9000, host: 9000
 end
