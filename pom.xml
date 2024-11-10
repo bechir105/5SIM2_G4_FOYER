@@ -17,7 +17,10 @@
 
     <properties>
         <java.version>17</java.version>
+        <sonar.login>9479d51a2d23edaf39db35c00c2cce8426cda947</sonar.login>
+
     </properties>
+
 
     <dependencies>
         <!-- Spring Boot Starter Data JPA -->
@@ -31,6 +34,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- sonar secret key -->
+
 
         <!-- MySQL Connector -->
         <dependency>
