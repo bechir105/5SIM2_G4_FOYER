@@ -17,8 +17,6 @@
 
     <properties>
         <java.version>17</java.version>
-        <sonar.login>9479d51a2d23edaf39db35c00c2cce8426cda947</sonar.login>
-
     </properties>
 
 
