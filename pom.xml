@@ -11,7 +11,7 @@
 
     <groupId>tn.esprit.spring</groupId>
     <artifactId>Foyer</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Foyer</name>
     <description>Foyer</description>
 
@@ -92,7 +92,7 @@
     <distributionManagement>
         <snapshotRepository>
             <id>deploymentRepo</id>
-            <url>http://192.168.167.10:8081/repository/maven-snapshots/</url>
+            <url>http://192.168.167.10:8081/repository/maven-releases/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
