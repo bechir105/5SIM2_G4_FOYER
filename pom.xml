@@ -90,7 +90,7 @@
           <distributionManagement>
         <snapshotRepository>
             <id>deploymentRepo</id>
-            <url>//192.168.167.10:8081//repository/maven-snapshots/</url> 
+            <url>http://192.168.167.10:8081/repository/maven-snapshots/</url> 
         </snapshotRepository>
     </distributionManagement>
 </project>
