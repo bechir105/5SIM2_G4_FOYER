@@ -8,10 +8,14 @@ Vagrant.configure("2") do |config|
   # Sync project folder to the VM
   config.vm.synced_folder ".", "/vagrant"
 
+
+
   # Allocate more memory for SonarQube to run smoothly
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "4096"  # Allocate 4GB to ensure enough memory for SonarQube
+    vb.memory = "8192"  # Allocate 4GB to ensure enough memory for SonarQube
   end
+
+config.vm.network "private_network", ip: "192.168.167.10"
 
 
   # Provisioning script
