@@ -90,9 +90,10 @@
         </plugins>
     </build>
     <distributionManagement>
-        <snapshotRepository>
-            <id>deploymentRepo</id>
-            <url>http://192.168.167.10:8081/repository/maven-releases/</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <repository>
+        <id>deploymentRepo</id>
+        <url>http://192.168.167.10:8081/repository/maven-releases/</url>
+    </repository>
+</distributionManagement>
+
 </project>
