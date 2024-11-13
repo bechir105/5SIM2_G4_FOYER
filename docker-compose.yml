@@ -3,7 +3,7 @@ services:
     image: mysql:5.7
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: khalil
+      MYSQL_ROOT_PASSWORD: khalil1919A
       MYSQL_DATABASE: db
     ports:
       - "3306:3306"
@@ -22,7 +22,7 @@ services:
         {
           "spring.datasource.url": "jdbc:mysql://mysqldb:3306/db?createDatabaseIfNotExist=true",
           "spring.datasource.username": "root",
-          "spring.datasource.password": "khalil",
+          "spring.datasource.password": "khalil1919A",
           "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL57Dialect",
           "spring.jpa.hibernate.ddl-auto": "update"
         }
