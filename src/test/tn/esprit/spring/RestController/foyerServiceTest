@@ -1,0 +1,174 @@
+package tn.esprit.spring.Services.Foyer;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import tn.esprit.spring.DAO.Entities.*;
+import tn.esprit.spring.DAO.Repositories.BlocRepository;
+import tn.esprit.spring.DAO.Repositories.FoyerRepository;
+import tn.esprit.spring.DAO.Repositories.UniversiteRepository;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@SpringBootTest
+class FoyerServiceTest {
+
+    @Mock
+    private FoyerRepository repo;
+
+    @Mock
+    private UniversiteRepository universiteRepository;
+
+    @Mock
+    private BlocRepository blocRepository;
+
+    @InjectMocks
+    private FoyerService foyerService;
+
+    private Foyer foyer;
+    private Universite universite;
+    private Bloc bloc;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+
+        // Initialize mock data for tests
+        foyer = new Foyer(1L, "Foyer A", null);
+        universite = new Universite(1L, "Université X", null);
+        bloc = new Bloc(1L, "Bloc 1", null);
+
+        // Set up the relationship
+        bloc.setFoyer(foyer);
+        foyer.setBlocs(Arrays.asList(bloc));
+    }
+
+    @Test
+    void testAddOrUpdateFoyer() {
+        // Arrange
+        when(repo.save(any(Foyer.class))).thenReturn(foyer);
+
+        // Act
+        Foyer result = foyerService.addOrUpdate(foyer);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(foyer.getId(), result.getId());
+        verify(repo, times(1)).save(foyer);  // Verifying that the save method was called once
+    }
+
+    @Test
+    void testFindAllFoyers() {
+        // Arrange
+        when(repo.findAll()).thenReturn(Arrays.asList(foyer));
+
+        // Act
+        List<Foyer> foyers = foyerService.findAll();
+
+        // Assert
+        assertNotNull(foyers);
+        assertEquals(1, foyers.size());
+        verify(repo, times(1)).findAll();
+    }
+
+    @Test
+    void testFindFoyerById() {
+        // Arrange
+        when(repo.findById(1L)).thenReturn(Optional.of(foyer));
+
+        // Act
+        Foyer result = foyerService.findById(1L);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        verify(repo, times(1)).findById(1L);
+    }
+
+    @Test
+    void testDeleteFoyerById() {
+        // Act
+        foyerService.deleteById(1L);
+
+        // Assert
+        verify(repo, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void testDeleteFoyer() {
+        // Act
+        foyerService.delete(foyer);
+
+        // Assert
+        verify(repo, times(1)).delete(foyer);
+    }
+
+    @Test
+    void testAffecterFoyerAUniversite() {
+        // Arrange
+        when(repo.findById(1L)).thenReturn(Optional.of(foyer));
+        when(universiteRepository.findByNomUniversite("Université X")).thenReturn(universite);
+        when(universiteRepository.save(any(Universite.class))).thenReturn(universite);
+
+        // Act
+        Universite result = foyerService.affecterFoyerAUniversite(1L, "Université X");
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(foyer, result.getFoyer());
+        verify(universiteRepository, times(1)).save(universite);
+    }
+
+    @Test
+    void testDesaffecterFoyerAUniversite() {
+        // Arrange
+        when(universiteRepository.findById(1L)).thenReturn(Optional.of(universite));
+        when(universiteRepository.save(any(Universite.class))).thenReturn(universite);
+
+        // Act
+        Universite result = foyerService.desaffecterFoyerAUniversite(1L);
+
+        // Assert
+        assertNotNull(result);
+        assertNull(result.getFoyer());
+        verify(universiteRepository, times(1)).save(universite);
+    }
+
+    @Test
+    void testAjouterFoyerEtAffecterAUniversite() {
+        // Arrange
+        when(repo.save(any(Foyer.class))).thenReturn(foyer);
+        when(universiteRepository.findById(1L)).thenReturn(Optional.of(universite));
+        when(universiteRepository.save(any(Universite.class))).thenReturn(universite);
+        when(blocRepository.save(any(Bloc.class))).thenReturn(bloc);
+
+        // Act
+        Foyer result = foyerService.ajouterFoyerEtAffecterAUniversite(foyer, 1L);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(foyer, result);
+        verify(blocRepository, times(1)).save(bloc);
+        verify(universiteRepository, times(1)).save(universite);
+    }
+
+    @Test
+    void testAjoutFoyerEtBlocs() {
+        // Arrange
+        when(repo.save(any(Foyer.class))).thenReturn(foyer);
+        when(blocRepository.save(any(Bloc.class))).thenReturn(bloc);
+
+        // Act
+        Foyer result = foyerService.ajoutFoyerEtBlocs(foyer);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(foyer, result);
+        verify(blocRepository, times(1)).save(bloc);
+    }
+}
