@@ -90,5 +90,20 @@
         </plugins>
     </build>
 
+         <distributionManagement>
+        <repository>
+            <!-- Spring Boot Maven Plugin -->
+                <id>nexus-releases</id>
+                <url>http://http://192.168.167.10:8081/repository/Foyer</url>
+                 <releases>
+                          <enabled>true</enabled>
+                 </releases>   
+                 <snapshots>
+                          <enabled>false</enabled>
+                 </snapshots>
+
+        </repository>
+    </distributionManagement>
+
 
 </project>
